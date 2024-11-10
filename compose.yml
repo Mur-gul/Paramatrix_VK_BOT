@@ -1,0 +1,16 @@
+services:
+
+###############################################################
+  app:
+    build:
+      context: .
+    restart: unless-stopped
+    tty: true
+    env_file:
+      - '.env'
+    networks:
+      - default
+
+networks:
+  default:
+    driver: bridge
