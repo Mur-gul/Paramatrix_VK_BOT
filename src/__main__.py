@@ -97,7 +97,7 @@ def uptime(message):
     # Проверяем, что команда была вызвана в групповом чате или супергруппе
     if message.chat.type not in ["group", "supergroup"]:
         # Если команда вызвана не в группе, игнорируем её
-        bot.send.message(message.chat.id, "Эта команда доступна только в групповом чате.")
+        bot.send_message(message.chat.id, "Эта команда доступна только в групповом чате.")
         return
     
     # Получаем продолжительность работы бота
