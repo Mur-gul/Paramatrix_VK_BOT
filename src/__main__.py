@@ -94,17 +94,32 @@ def handle_failed_response(server_info, data):
 # Команд хендлер для проверки аптайма бота
 @bot.message_handler(commands=['uptime'])
 def uptime(message):
+    # Проверяем, что команда была вызвана в групповом чате или супергруппе
+    if message.chat.type not in ["group", "supergroup"]:
+        # Если команда вызвана не в группе, игнорируем её
+        bot.send.message(message.chat.id, "Эта команда доступна только в групповом чате.")
+        return
+    
+    # Получаем продолжительность работы бота
     uptime_duration = datetime.now() - bot_start_time
+
+    # Разбиваем продолжительность на дни, часы, минуты и секунды
     days, remainder = divmod(uptime_duration.total_seconds(), 86400)  # 86400 секунд в день
     hours, remainder = divmod(remainder, 3600)  # 3600 секунд в часе
     minutes, seconds = divmod(remainder, 60)  # 60 секунд в минуте
+
+    # Форматируем аптайм для отправки
     formatted_uptime = f"{int(days)} дней, {int(hours)} часов, {int(minutes)} минут, {int(seconds)} секунд"
 
-    # Отправка сообщения об аптайме
-    bot.send_message(TELEGRAM_CHAT_ID, f"🤖 Я работаю уже: {formatted_uptime}",
+    try:
+        # Отправка сообщения об аптайме
+        bot.send_message(TELEGRAM_CHAT_ID, f"🤖 Я работаю уже: {formatted_uptime}",
                      parse_mode='Markdown',
                      disable_web_page_preview=False,
                      message_thread_id=TELEGRAM_THREAD_ID) # Выбор конкретной темы
+        
+    except Exception as e:
+        print(f"Ошибка отправки сообщения об аптайме: {e}")
 
 should_run = True
 def signal_handler(sig, frame):
