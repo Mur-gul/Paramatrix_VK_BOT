@@ -99,7 +99,9 @@ def uptime(message):
     hours, remainder = divmod(remainder, 3600)  # 3600 секунд в часе
     minutes, seconds = divmod(remainder, 60)  # 60 секунд в минуте
     formatted_uptime = f"{int(days)} дней, {int(hours)} часов, {int(minutes)} минут, {int(seconds)} секунд"
-    bot.reply_to(message, f"🤖 Я работаю уже: {formatted_uptime}")
+
+    # Отправка сообщения об аптайме
+    bot.send_message(message.chat.id), f"🤖 Я работаю уже: {formatted_uptime}"
 
 should_run = True
 def signal_handler(sig, frame):
