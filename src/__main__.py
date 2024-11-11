@@ -101,7 +101,10 @@ def uptime(message):
     formatted_uptime = f"{int(days)} дней, {int(hours)} часов, {int(minutes)} минут, {int(seconds)} секунд"
 
     # Отправка сообщения об аптайме
-    bot.send_message(message.chat.id, f"🤖 Я работаю уже: {formatted_uptime}")
+    bot.send_message(TELEGRAM_CHAT_ID, f"🤖 Я работаю уже: {formatted_uptime}",
+                     parse_mode='Markdown',
+                     disable_web_page_preview=False,
+                     message_thread_id=TELEGRAM_THREAD_ID) # Выбор конкретной темы
 
 should_run = True
 def signal_handler(sig, frame):
